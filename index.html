@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>恒产 · 有恒产者有恒心 | TestFlight 内测</title>
+<meta name="description" content="恒产是一款只存 iCloud 的个人财务管家：净资产、消费、工资、信用卡、定期存款、公积金、借款和投资，一个 App 看清。TestFlight 内测中。">
+<meta property="og:title" content="恒产 · 有恒产者有恒心">
+<meta property="og:description" content="把财务的确定性，交回你自己手里。只存 iCloud 的个人财务管家，TestFlight 内测中。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/01-dashboard.png">
+<link rel="icon" href="images/app-icon.png">
+<link rel="apple-touch-icon" href="images/app-icon.png">
+<style>
+  :root{
+    --navy:#0a1b33;
+    --navy-2:#112846;
+    --gold:#d4a017;
+    --gold-soft:#f0c75e;
+    --cream:#f7f3ea;
+    --paper:#ffffff;
+    --ink:#14213d;
+    --muted:#5f6b7a;
+    --line:#e6e0d4;
+    --green:#1f8a5b;
+    --radius:20px;
+    --max:1120px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--gold);color:var(--navy);
+    padding:13px 22px;border-radius:999px;font-weight:700;
+    border:1px solid rgba(0,0,0,.06);
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 8px 24px rgba(212,160,23,.28);
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(212,160,23,.35)}
+  .btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28);box-shadow:none}
+  .btn.small{padding:10px 16px;font-size:14px}
+  header{
+    position:sticky;top:0;z-index:20;
+    background:rgba(10,27,51,.92);
+    backdrop-filter:saturate(180%) blur(12px);
+    color:#fff;border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.04em}
+  .brand-icon{
+    width:32px;height:32px;border-radius:9px;display:block;
+    box-shadow:0 0 0 1px rgba(255,255,255,.28), 0 6px 18px rgba(0,0,0,.28);
+  }
+  .nav-links{display:flex;gap:22px;font-size:14px;color:rgba(255,255,255,.78)}
+  .nav-links a:hover{color:#fff}
+  .nav .btn{font-size:14px;padding:9px 16px}
+  .hero{
+    background:
+      radial-gradient(900px 420px at 85% -10%, rgba(212,160,23,.22), transparent 60%),
+      radial-gradient(700px 400px at 0% 100%, rgba(47,107,255,.18), transparent 60%),
+      var(--navy);
+    color:#fff;padding:72px 0 64px;overflow:hidden;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gold-soft);border:1px solid rgba(240,199,94,.35);
+    padding:6px 12px;border-radius:999px;background:rgba(240,199,94,.08);
+  }
+  h1{font-size:clamp(38px,5.2vw,64px);line-height:1.18;margin:18px 0 14px;letter-spacing:.02em}
+  .hero p.lead{font-size:clamp(16px,1.8vw,19px);color:rgba(255,255,255,.78);max-width:560px;margin:0 0 26px}
+  .hero .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .hero .fine{font-size:13px;color:rgba(255,255,255,.55);margin-top:14px}
+  .qr-card{
+    background:#fff;color:var(--ink);border-radius:24px;padding:22px;
+    box-shadow:0 30px 80px rgba(0,0,0,.35);
+    max-width:360px;justify-self:end;width:100%;
+  }
+  .qr-card h3{margin:0 0 4px;font-size:17px}
+  .qr-card p{margin:0 0 14px;color:var(--muted);font-size:13px}
+  .qr-card img{border-radius:14px;background:#fff}
+  .qr-card .link{margin-top:12px;font-size:12px;color:var(--muted);word-break:break-all}
+  .phones{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+  .phone{
+    border-radius:30px;padding:8px;background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.06));
+    border:1px solid rgba(255,255,255,.18);
+  }
+  .phone img{border-radius:23px;width:100%}
+  .trust{
+    background:var(--paper);border-bottom:1px solid var(--line);
+  }
+  .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;padding:26px 0}
+  .trust-item{display:flex;gap:12px;align-items:flex-start}
+  .trust-icon{
+    flex:0 0 38px;height:38px;border-radius:12px;display:grid;place-items:center;
+    background:rgba(212,160,23,.12);color:#9a7400;font-size:18px;
+  }
+  .trust-item strong{display:block;font-size:15px}
+  .trust-item span{font-size:13px;color:var(--muted)}
+  section{padding:76px 0}
+  .section-head{max-width:720px;margin:0 auto 40px;text-align:center}
+  .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#9a7400;font-weight:700}
+  h2{font-size:clamp(26px,3.2vw,38px);line-height:1.3;margin:10px 0 12px}
+  .section-head p{color:var(--muted);margin:0}
+  .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .principle{
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+  }
+  .principle .num{font-size:13px;color:var(--gold);font-weight:800;letter-spacing:.12em}
+  .principle h3{margin:8px 0 6px;font-size:19px}
+  .principle p{margin:0;color:var(--muted);font-size:14px}
+  .features{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .feature{
+    background:var(--cream);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;display:flex;flex-direction:column;
+  }
+  .feature .shot{
+    background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line);
+    margin-bottom:16px;
+  }
+  .feature .shot img{width:100%}
+  .feature h3{margin:0 0 6px;font-size:18px}
+  .feature p{margin:0;color:var(--muted);font-size:14px}
+  .beta{
+    background:
+      radial-gradient(800px 380px at 100% 0%, rgba(212,160,23,.18), transparent 60%),
+      var(--navy);color:#fff;
+  }
+  .beta-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .beta h2{color:#fff}
+  .beta p{color:rgba(255,255,255,.75)}
+  .steps{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:14px}
+  .steps li{display:flex;gap:12px;align-items:flex-start;color:rgba(255,255,255,.82)}
+  .steps .n{
+    flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;
+    background:var(--gold);color:var(--navy);font-weight:800;font-size:13px;margin-top:2px;
+  }
+  .beta-card{
+    background:#fff;color:var(--ink);border-radius:24px;padding:24px;text-align:center;
+    box-shadow:0 30px 80px rgba(0,0,0,.35);
+  }
+  .beta-card img{width:220px;margin:0 auto 12px}
+  .beta-card h3{margin:0 0 4px}
+  .beta-card p{margin:0 0 16px;color:var(--muted);font-size:13px}
+  .faq{background:var(--paper);border-top:1px solid var(--line)}
+  .faq-list{max-width:820px;margin:0 auto;display:grid;gap:10px}
+  details{
+    background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+  }
+  details summary{cursor:pointer;font-weight:700;font-size:15px}
+  details p{margin:10px 0 0;color:var(--muted);font-size:14px}
+  footer{background:var(--navy);color:rgba(255,255,255,.66);padding:36px 0;font-size:13px}
+  .footer-grid{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+  .footer-links{display:flex;flex-wrap:wrap;gap:18px}
+  .footer-links a:hover{color:#fff}
+  .note{font-size:12px;color:rgba(255,255,255,.42);margin-top:10px}
+  @media (max-width:920px){
+    .hero-grid,.beta-grid{grid-template-columns:1fr}
+    .qr-card{justify-self:start}
+    .phones{grid-template-columns:repeat(3,1fr)}
+    .trust-grid,.principles,.feature-grid{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+  }
+  @media (max-width:640px){
+    section{padding:54px 0}
+    .hero{padding:52px 0}
+    .phones{grid-template-columns:1fr;max-width:320px;margin-left:auto;margin-right:auto}
+    .trust-grid,.principles,.feature-grid{grid-template-columns:1fr}
+    .nav .btn{display:none}
+    .beta-card img{width:180px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <img class="brand-icon" src="images/app-icon.png" alt="恒产 App 图标">
+      <span>恒产 <span style="font-weight:400;color:rgba(255,255,255,.55);font-size:13px">· 个人金融管家</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#why">为什么</a>
+      <a href="#features">功能</a>
+      <a href="#beta">内测</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <a class="btn" href="https://testflight.apple.com/join/pyH7uEFu" target="_blank" rel="noopener">加入 TestFlight</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">TestFlight 内测 · iPhone / iPad</span>
+          <h1>有恒产者<br>有恒心。</h1>
+          <p class="lead">把散在银行卡、微信、支付宝、基金、信用卡和公积金里的钱，收拢成一张看得清、管得住、能长期积累的资产负债表。数据只留在你自己的 iCloud。</p>
+          <div class="cta-row">
+            <a class="btn" href="https://testflight.apple.com/join/pyH7uEFu" target="_blank" rel="noopener">加入 TestFlight 内测</a>
+            <a class="btn ghost" href="#features">看看功能</a>
+          </div>
+          <p class="fine">iOS 17+ · 免费内测 · 所有截图均为示例数据</p>
+        </div>
+        <div class="qr-card" id="qr">
+          <h3>扫码加入内测</h3>
+          <p>用 iPhone 相机扫码，或在 TestFlight 里打开链接。</p>
+          <img src="images/testflight-qr.png" alt="TestFlight 内测二维码">
+          <div class="link">testflight.apple.com/join/pyH7uEFu</div>
+        </div>
+      </div>
+
+      <div class="phones">
+        <div class="phone"><img src="images/01-dashboard.png" alt="恒产看板：净资产、本周消费、信用卡、定期存款、公积金" loading="lazy"></div>
+        <div class="phone"><img src="images/04-community.png" alt="恒产社区：官方公告、板块和讨论" loading="lazy"></div>
+        <div class="phone"><img src="images/06-monthly.png" alt="恒产月报：收入、消费、储蓄率和资产负债快照" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust">
+    <div class="wrap trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">🔒</div>
+        <div><strong>数据只在你自己的 iCloud</strong><span>私有库存储，开发者看不到，也不会上传。</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">📊</div>
+        <div><strong>不只是一本流水账</strong><span>资产、负债、现金流、投资和报表放在一张表里。</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🧭</div>
+        <div><strong>不荐股，不预测市场</strong><span>靠记录、配置和纪律，把确定性一点点建立起来。</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="why">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">为什么是恒产</div>
+        <h2>财务的确定性，来自看清、纪律和所有权</h2>
+        <p>不是又一个记账工具，而是一个让你对自己的财务心里有底的地方。</p>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <div class="num">01 · 看清</div>
+          <h3>一张自己的资产负债表</h3>
+          <p>净资产、现金、定期存款、公积金、信用卡、借款、基金和股票，收拢到同一张表里，知道钱在哪、欠多少。</p>
+        </div>
+        <div class="principle">
+          <div class="num">02 · 纪律</div>
+          <h3>长期配置，而不是追涨杀跌</h3>
+          <p>板块配置、再平衡、每日收益和月报，帮你按计划做事；社区可以聊思路，但不荐股、不带单。</p>
+        </div>
+        <div class="principle">
+          <div class="num">03 · 所有权</div>
+          <h3>数据属于你，而不属于平台</h3>
+          <p>账本数据只存在你自己的 iCloud 私有库，没有服务器、没有广告、没有数据买卖。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">功能</div>
+        <h2>一个 App，管好资产、消费和长期计划</h2>
+        <p>下面所有截图都来自示例模式，不含任何真实账户信息。</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature">
+          <div class="shot"><img src="images/01-dashboard.png" alt="看板" loading="lazy"></div>
+          <h3>看板：净资产一屏看清</h3>
+          <p>可支配/总净资产、本周消费、信用卡待还、定期存款和公积金，打开就知道自己的位置。</p>
+        </article>
+        <article class="feature">
+          <div class="shot"><img src="images/02-expenses.png" alt="截图自动记账" loading="lazy"></div>
+          <h3>截图自动记账</h3>
+          <p>付款后双击手机背面，识别金额、商户和付款方式；不确定的先进「截图待确认」，确认后才入账。</p>
+        </article>
+        <article class="feature">
+          <div class="shot"><img src="images/03-investments.png" alt="投资与每日收益" loading="lazy"></div>
+          <h3>投资与每日收益</h3>
+          <p>基金/股票/ETF 持仓、板块配置、每日收益；QDII 官方净值未出时用黄色「估」标记，公布后自动替换。</p>
+        </article>
+        <article class="feature">
+          <div class="shot"><img src="images/05-accounts.png" alt="账户与负债" loading="lazy"></div>
+          <h3>账户、定存、信用卡和借款</h3>
+          <p>定期存款到期提醒、信用卡账单日和还款日、个人借款月供，都在账户页统一管理。</p>
+        </article>
+        <article class="feature">
+          <div class="shot"><img src="images/04-community.png" alt="恒产社区" loading="lazy"></div>
+          <h3>恒产社区</h3>
+          <p>测试员专属的轻社区：提建议、聊资产配置、直接和开发者对话；禁止荐股、带单和收费群。</p>
+        </article>
+        <article class="feature">
+          <div class="shot"><img src="images/06-monthly.png" alt="月报" loading="lazy"></div>
+          <h3>月报：收入、消费和储蓄率</h3>
+          <p>净现金流、消费分类、资产负债快照和本月大事，次月 1 日自动出炉，也可以导出 PNG 分享。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="beta" id="beta">
+    <div class="wrap beta-grid">
+      <div>
+        <div class="kicker" style="color:var(--gold-soft)">TestFlight 内测</div>
+        <h2>来帮我把它做得好一点</h2>
+        <p>现在还是 TestFlight 阶段，很多地方只有真实用起来才知道顺不顺手。这轮测试大约 7–14 天，重点试：新手引导、截图自动记账、信用卡、定期存款、月报，以及社区本身。</p>
+        <ul class="steps">
+          <li><span class="n">1</span><span>用 iPhone/iPad 打开 TestFlight 链接，安装 TestFlight。</span></li>
+          <li><span class="n">2</span><span>接受邀请，安装「恒产」。</span></li>
+          <li><span class="n">3</span><span>打开 App，按自己的节奏用几天；数据只存在你的 iCloud。</span></li>
+          <li><span class="n">4</span><span>在 App 的社区里直接反馈，或发邮件到 2315816811@qq.com。</span></li>
+        </ul>
+        <p class="fine">iOS 17+ · iPhone / iPad · 内测免费 · 构建 90 天有效</p>
+      </div>
+      <div class="beta-card">
+        <img src="images/testflight-qr.png" alt="TestFlight 内测二维码">
+        <h3>扫码加入</h3>
+        <p>或点下面的按钮在 TestFlight 中打开</p>
+        <a class="btn" href="https://testflight.apple.com/join/pyH7uEFu" target="_blank" rel="noopener">加入 TestFlight</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">常见问题</div>
+        <h2>你可能想先知道</h2>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary>我的账本数据安全吗？</summary>
+          <p>账本数据只保存在你自己的 iCloud 私有数据库，开发者看不到，也不会上传到任何服务器。社区内容是公开的，但和账本数据分开；不要在社区里发布账户余额、银行卡、身份证等敏感信息。</p>
+        </details>
+        <details>
+          <summary>内测收费吗？正式版会收费吗？</summary>
+          <p>TestFlight 内测完全免费。正式版的定价也会根据内测用户的反馈来进行调整。</p>
+        </details>
+        <details>
+          <summary>支持哪些设备？</summary>
+          <p>iPhone 和 iPad，要求 iOS 17 或更高版本。所有数据通过你自己的 iCloud 在设备间同步。</p>
+        </details>
+        <details>
+          <summary>和普通记账 App 有什么区别？</summary>
+          <p>恒产不是只记流水：它把资产、负债、现金流、定期存款、信用卡、公积金、借款和投资放在一张资产负债表里，并且提供周报、月报和长期配置视角。</p>
+        </details>
+        <details>
+          <summary>社区里能聊股票吗？</summary>
+          <p>可以聊资产配置和投资思路，但禁止荐股、带单、收费群和收益承诺。所有观点仅代表个人，不构成投资建议。</p>
+        </details>
+        <details>
+          <summary>TestFlight 链接打不开怎么办？</summary>
+          <p>先确认设备是 iOS 17+ 并安装了 TestFlight；如果提示名额或审核问题，可以发邮件到 2315816811@qq.com，我会帮你看。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <strong style="color:#fff">恒产</strong> · 有恒产者有恒心
+      <div class="note">示例截图，不含真实账户信息。TestFlight 内测中。</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://testflight.apple.com/join/pyH7uEFu" target="_blank" rel="noopener">TestFlight</a>
+      <a href="mailto:2315816811@qq.com">反馈邮箱</a>
+      <a href="https://gist.github.com/hanqingyi123/4dcaabc90021d5577a1466ad225da44e" target="_blank" rel="noopener">隐私政策</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
