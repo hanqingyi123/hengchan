@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hanqingyi123.github.io/hengchan/sitemap.xml

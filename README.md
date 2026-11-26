@@ -104,3 +104,9 @@ iPhone 和 iPad，要求 iOS 17 或更高版本。数据通过你自己的 iClou
 <p align="center">
   <sub>截图均为示例数据，不含真实账户信息。TestFlight 内测中。</sub>
 </p>
+
+---
+
+<p align="center">
+  <sub>本仓库仅用于恒产 TestFlight 内测宣传；页面文案与截图的版权归恒产团队所有。App 源码未开源，本仓库不包含任何 App 代码、CloudKit 配置或用户数据。</sub>
+</p>
